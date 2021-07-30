@@ -8,12 +8,22 @@ export default function SignUp() {
     
     const history = useHistory();
 
-    const [full_name, setFull_name] = useState('');
-    const [usernameReg, setUsernameReg] = useState('');
-    const [passwordReg, setPasswordReg] = useState('');
-    const [phone, setPhone] = useState('');
-    const [signUpmessage, setSignupMessage] = useState('');
-
+    const initialState = {
+        full_name:"",
+        usernameReg:"",
+        passwordReg:"",
+        phone:"",
+        signUpmessage:""
+    }
+//     const [full_name, setFull_name] = useState('');
+//     const [usernameReg, setUsernameReg] = useState('');
+//     const [passwordReg, setPasswordReg] = useState('');
+//     const [phone, setPhone] = useState('');
+//     const [signUpmessage, setSignupMessage] = useState('');
+    
+    const [state, setState] = useState(initialState)
+    
+    
     const storeItem = (response) => {
         localStorage.setItem('loggedIn',JSON.stringify(true));
         localStorage.setItem('id',JSON.stringify(response.data[0].id));
@@ -51,7 +61,14 @@ export default function SignUp() {
             setSignupMessage('All inputs must be filled')
         }
     };
-
+    
+    const onChange = (e) =>{
+        e.preventDefault()
+        
+        const {name, value} = e.target
+        setState({...state, [name]:value})
+        
+    }
     return (
         <div className="container">
             <h1>Sign up</h1>
@@ -59,13 +76,17 @@ export default function SignUp() {
                 
                 <label>Full Name:</label>
                 <input 
-                    onChange={(e) => setFull_name(e.target.value)}
+        
+                    name='full_name'
+                    onChange={onChange}
                     type="text" 
                 />
 
                 <label>Username:</label>
                 <input 
-                    onChange={(e) => setUsernameReg(e.target.value)}
+
+                    name='usernameReg'
+                    onChange={onChange}
                     type="text"
                 />
 
